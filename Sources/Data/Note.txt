@@ -1,0 +1,3 @@
+This directory is ignored because the creator of Advent of Code has asked that the inputs are not shared publicly.
+
+Please add your own input files here to pass to the individual solutions.
