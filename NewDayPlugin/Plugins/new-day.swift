@@ -83,7 +83,7 @@ extension NewDay {
 
     // Add any extra code and types in here to separate it from the required behaviour
     extension Day\(number) {}
-    
+
     """
   }
 
@@ -131,7 +131,7 @@ extension NewDay {
     private let testInput =
       \"\"\"
       \"\"\"
-    
+
     """
   }
 }
