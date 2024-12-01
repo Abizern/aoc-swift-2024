@@ -1,3 +1,4 @@
+import Collections
 import Foundation
 import Parsing
 
@@ -10,22 +11,24 @@ struct Day01: AdventDay, Sendable {
     self.data = data
   }
 
-  var pairs: [(Int, Int)] {
-    parseData(data)
-  }
-
   var lists: ([Int], [Int]) {
-    pairs.reduce(into: ([Int](), [Int]())) { partialResult, pair in
+    parseData(data).reduce(into: ([Int](), [Int]())) { partialResult, pair in
       partialResult.0.append(pair.0)
       partialResult.1.append(pair.1)
     }
   }
 
   func part1() async throws -> Int {
-    zip(lists.0.sorted(), lists.1.sorted()).map { left, right in
-      abs(left - right)
+    let (left, right) = lists
+    var leftHeap = Heap(left)
+    var rightHeap = Heap(right)
+
+    var result = 0
+    while !leftHeap.isEmpty, !rightHeap.isEmpty {
+      result += abs(leftHeap.removeMin() - rightHeap.removeMin())
     }
-    .reduce(0, +)
+
+    return result
   }
 
   func part2() async throws -> Int {

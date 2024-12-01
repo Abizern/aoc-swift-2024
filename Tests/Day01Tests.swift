@@ -9,9 +9,8 @@ struct Day01Tests {
     @Test("Test parser implementation")
     func parseInput() {
       let day = Day01(data: testInput)
-      #expect(day.pairs.count == 6)
-      #expect(day.pairs[0] == (3, 4))
-      #expect(day.pairs[5] == (3, 3))
+      #expect(day.lists.0 == [3, 4, 2, 1, 3, 3])
+      #expect(day.lists.1 == [4, 3, 5, 3, 9, 3])
     }
   }
 
