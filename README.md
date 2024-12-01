@@ -67,3 +67,6 @@ I use Swiftformat so this works for me:
 swiftformat .
 ```
 
+## Notes to solutions:
+
+- [Day1: Historian Hysteria](https://abizern.dev/posts/aoc-day1-historian-hysteria/)
