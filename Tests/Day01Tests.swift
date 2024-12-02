@@ -14,23 +14,21 @@ struct Day01Tests {
     }
   }
 
+
   @Suite("Tests on sample inputs")
   struct SolutionsTests {
-    @Suite("Tests on sample inputs")
-    struct SolutionsTests {
-      let day = Day01(data: testInput)
+    let day = Day01(data: testInput)
 
-      @Test("Part1 example")
-      func testPart1() async throws {
-        let result = try await day.part1()
-        #expect(result == 11)
-      }
+    @Test("Part1 example")
+    func testPart1() async throws {
+      let result = try await day.part1()
+      #expect(result == 11)
+    }
 
-      @Test("Part2 example")
-      func testPart2() async throws {
-        let result = try await day.part2()
-        #expect(result == 31)
-      }
+    @Test("Part2 example")
+    func testPart2() async throws {
+      let result = try await day.part2()
+      #expect(result == 31)
     }
   }
 }

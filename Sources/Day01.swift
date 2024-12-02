@@ -4,7 +4,7 @@ import Parsing
 
 struct Day01: AdventDay, Sendable {
   let data: String
-  let day = 0
+  let day = 1
   let puzzleName: String = "--- Day 1: Historian Hysteria ---"
 
   init(data: String) {
