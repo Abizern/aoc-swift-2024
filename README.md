@@ -70,3 +70,5 @@ swiftformat .
 ## Notes to solutions:
 
 - [Day1: Historian Hysteria](https://abizern.dev/posts/aoc-day1-historian-hysteria/)
+- [Day2: Red-Nosed Reports](https://abizern.dev/posts/aoc-day2-red-nosed-reports/)
+

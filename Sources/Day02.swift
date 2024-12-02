@@ -28,7 +28,6 @@ struct Day02: AdventDay, Sendable {
   }
 }
 
-// Add any extra code and types in here to separate it from the required behaviour
 extension Day02 {
   func isSafe(_ report: [Int]) -> Bool {
     guard let start = report.first,

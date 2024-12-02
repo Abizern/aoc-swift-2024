@@ -3,7 +3,7 @@
 | Day | Title              |  Part 1 |    Part2 | Done afterwards |
 |-----+--------------------+---------+----------+-----------------|
 |   1 | Historian Hysteria | 2113135 | 19097157 |                 |
-|   2 |                    |         |          |                 |
+|   2 | Red-Nosed Reports  |     299 |      364 |                 |
 |   3 |                    |         |          |                 |
 |   4 |                    |         |          |                 |
 |   5 |                    |         |          |                 |
@@ -33,7 +33,7 @@
 
 | Period                    | number |
 |---------------------------+--------|
-| Achieved during the month |   2    |
+| Achieved during the month |   4    |
 | Achieved later            |        |
-| Total                     |   2    |
+| Total                     |   4    |
 |                           |        |

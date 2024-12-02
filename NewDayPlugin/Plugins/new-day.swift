@@ -100,7 +100,7 @@ extension NewDay {
         @Test("Test parser implementation")
         func parseInput() {
           let day = Day\(number)(data: testInput)
-    
+
         }
       }
 
@@ -125,7 +125,7 @@ extension NewDay {
         }
       }
     }
-    
+
     private let testInput =
       \"\"\"
       \"\"\"

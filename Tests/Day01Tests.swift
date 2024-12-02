@@ -14,7 +14,6 @@ struct Day01Tests {
     }
   }
 
-
   @Suite("Tests on sample inputs")
   struct SolutionsTests {
     let day = Day01(data: testInput)
