@@ -68,7 +68,7 @@ extension NewDay {
     struct Day\(number): AdventDay, Sendable {
       // Save your data in a corresponding text file in the `Data` directory.
       let data: String
-      let day = 0
+      let day = \(Int(number) ?? 0)
       let puzzleName: String = "--- Day 0: Placeholder! ---"
 
       init(data: String) {
@@ -89,45 +89,43 @@ extension NewDay {
 
   func tests(_ number: String) -> String {
     """
-      import Testing
+    import Testing
 
-      @testable import AdventOfCode
+    @testable import AdventOfCode
 
-      @Suite("Day\(number) Tests")
-      struct Day\(number)Tests {
+    @Suite("Day\(number) Tests")
+    struct Day\(number)Tests {
       @Suite("Parser Tests")
       struct ParserTests {
         @Test("Test parser implementation")
         func parseInput() {
-          //
+          let day = Day\(number)(data: testInput)
+    
         }
       }
 
       @Suite("Tests on sample inputs")
       struct SolutionsTests {
-        @Suite("Tests on sample inputs")
-        struct SolutionsTests {
-          let day = Day\(number)(data: testInput)
+        let day = Day\(number)(data: testInput)
 
-          @Test("Part1 example")
-          func testPart1() async throws {
-            await withKnownIssue {
-              let result = try await day.part1()
-              #expect(result == 10)
-            }
+        @Test("Part1 example")
+        func testPart1() async throws {
+          await withKnownIssue {
+            let result = try await day.part1()
+            #expect(result == 10)
           }
+        }
 
-          @Test("Part2 example")
-          func testPart2() async throws {
-            await withKnownIssue {
-              let result = try await day.part2()
-              #expect(result == 10)
-            }
+        @Test("Part2 example")
+        func testPart2() async throws {
+          await withKnownIssue {
+            let result = try await day.part2()
+            #expect(result == 10)
           }
         }
       }
     }
-
+    
     private let testInput =
       \"\"\"
       \"\"\"
