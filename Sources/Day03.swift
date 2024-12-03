@@ -10,21 +10,39 @@ struct Day03: AdventDay, Sendable {
     self.data = data
   }
 
-  var pairs: [(Int, Int)] {
+  var instructions: [Instruction] {
     parseInput()
   }
 
   func part1() async throws -> Int {
-    pairs.map { a, b in a * b }.reduce(0, +)
+    instructions.map(\.value).reduce(0, +)
+  }
+
+  func part2() async throws -> Int {
+    instructions.reduce(into: (0, Instruction.enabled)) { accumulator, instruction in
+      let sum = accumulator.0
+      let state = accumulator.1
+
+      switch instruction {
+      case .enabled:
+        accumulator = (sum, .enabled)
+      case .disabled:
+        accumulator = (sum, .disabled)
+      case .mul:
+        if state == .enabled {
+          accumulator = (sum + instruction.value, .enabled)
+        }
+      }
+    }.0
   }
 }
 
 extension Day03 {
-  func parseInput() -> [(Int, Int)] {
-    var result = [(Int, Int)]()
+  func parseInput() -> [Instruction] {
+    var result = [Instruction]()
     var data = data[...]
     while !data.isEmpty {
-      if let pair = try? MultParser().parse(&data) {
+      if let pair = try? InstructionParser().parse(&data) {
         result.append(pair)
       } else {
         data = data.dropFirst()
@@ -34,12 +52,44 @@ extension Day03 {
   }
 }
 
-struct MultParser: Parser {
-  var body: some Parser<Substring, (Int, Int)> {
-    "mul("
-    Int.parser()
-    ","
-    Int.parser()
-    ")"
+extension Day03 {
+  enum Instruction: Equatable {
+    case mul(Int, Int)
+    case enabled
+    case disabled
+
+    init(_ a: Int, _ b: Int) {
+      self = .mul(a, b)
+    }
+
+    var value: Int {
+      switch self {
+      case .mul(let a, let b): a * b
+      case .disabled: 0
+      case .enabled: 0
+      }
+    }
+  }
+
+  struct MulParser: Parser {
+    var body: some Parser<Substring, Instruction> {
+      Parse(Instruction.init) {
+        "mul("
+        Int.parser()
+        ","
+        Int.parser()
+        ")"
+      }
+    }
+  }
+
+  struct InstructionParser: Parser {
+    var body: some Parser<Substring, Instruction> {
+      OneOf {
+        MulParser()
+        "don't()".map { _ in Instruction.disabled }
+        "do()".map { _ in Instruction.enabled }
+      }
+    }
   }
 }
