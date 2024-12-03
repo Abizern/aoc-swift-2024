@@ -9,6 +9,7 @@ struct Day03Tests {
     @Test("Test parser implementation")
     func parseInput() {
       let day = Day03(data: testInput)
+      #expect(day.pairs.count == 4)
     }
   }
 
@@ -18,10 +19,8 @@ struct Day03Tests {
 
     @Test("Part1 example")
     func testPart1() async throws {
-      await withKnownIssue {
-        let result = try await day.part1()
-        #expect(result == 10)
-      }
+      let result = try await day.part1()
+      #expect(result == 161)
     }
 
     @Test("Part2 example")
@@ -34,6 +33,4 @@ struct Day03Tests {
   }
 }
 
-private let testInput =
-  """
-  """
+private let testInput = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"

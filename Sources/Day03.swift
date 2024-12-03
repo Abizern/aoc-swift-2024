@@ -1,20 +1,34 @@
 import Foundation
 
 struct Day03: AdventDay, Sendable {
-  // Save your data in a corresponding text file in the `Data` directory.
   let data: String
   let day = 3
-  let puzzleName: String = "--- Day 0: Placeholder! ---"
+  let puzzleName: String = "--- Day 3: Mull It Over ---"
 
   init(data: String) {
     self.data = data
   }
 
-  // Replace this with your solution for the first part of the day's challenge.
+  var pairs: [(Int, Int)] {
+    parseInput()
+  }
+
   func part1() async throws -> Int {
-    0
+    pairs.map { a, b in a * b }.reduce(0, +)
   }
 }
 
-// Add any extra code and types in here to separate it from the required behaviour
-extension Day03 {}
+extension Day03 {
+  func parseInput() -> [(Int, Int)] {
+    let pattern = #/mul\((\d+),(\d+)\)/#
+
+    return data
+      .matches(of: pattern)
+      .map { match -> (Int, Int)? in
+        if let a = Int(match.output.1), let b = Int(match.output.2) {
+          return (a, b)
+        }
+        return nil
+      }.compactMap { $0 }
+  }
+}
