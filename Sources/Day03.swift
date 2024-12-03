@@ -1,4 +1,5 @@
 import Foundation
+import Parsing
 
 struct Day03: AdventDay, Sendable {
   let data: String
@@ -20,15 +21,25 @@ struct Day03: AdventDay, Sendable {
 
 extension Day03 {
   func parseInput() -> [(Int, Int)] {
-    let pattern = #/mul\((\d+),(\d+)\)/#
+    var result = [(Int, Int)]()
+    var data = data[...]
+    while !data.isEmpty {
+      if let pair = try? MultParser().parse(&data) {
+        result.append(pair)
+      } else {
+        data = data.dropFirst()
+      }
+    }
+    return result
+  }
+}
 
-    return data
-      .matches(of: pattern)
-      .map { match -> (Int, Int)? in
-        if let a = Int(match.output.1), let b = Int(match.output.2) {
-          return (a, b)
-        }
-        return nil
-      }.compactMap { $0 }
+struct MultParser: Parser {
+  var body: some Parser<Substring, (Int, Int)> {
+    "mul("
+    Int.parser()
+    ","
+    Int.parser()
+    ")"
   }
 }
