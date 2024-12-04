@@ -5,7 +5,7 @@
 |   1 | Historian Hysteria |   2113135 | 19097157 |                 |
 |   2 | Red-Nosed Reports  |       299 |      364 |                 |
 |   3 | Mull It Over       | 156388521 | 75920122 |                 |
-|   4 |                    |           |          |                 |
+|   4 | Ceres Search       |      2462 |     1877 |                 |
 |   5 |                    |           |          |                 |
 |   6 |                    |           |          |                 |
 |   7 |                    |           |          |                 |
@@ -33,7 +33,7 @@
 
 | Period                    | number |
 |---------------------------+--------|
-| Achieved during the month |   6    |
+| Achieved during the month |   8    |
 | Achieved later            |        |
-| Total                     |   6    |
+| Total                     |   8    |
 |                           |        |
