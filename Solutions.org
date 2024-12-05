@@ -6,7 +6,7 @@
 |   2 | Red-Nosed Reports  |       299 |      364 |                 |
 |   3 | Mull It Over       | 156388521 | 75920122 |                 |
 |   4 | Ceres Search       |      2462 |     1877 |                 |
-|   5 |                    |           |          |                 |
+|   5 | Print Queue        |      5955 |     4030 |                 |
 |   6 |                    |           |          |                 |
 |   7 |                    |           |          |                 |
 |   8 |                    |           |          |                 |
@@ -33,7 +33,7 @@
 
 | Period                    | number |
 |---------------------------+--------|
-| Achieved during the month |   8    |
+| Achieved during the month |   10   |
 | Achieved later            |        |
-| Total                     |   8    |
+| Total                     |   10   |
 |                           |        |

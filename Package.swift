@@ -11,6 +11,9 @@ let dependencies: [Target.Dependency] = [
 let package = Package(
   name: "AdventOfCode",
   platforms: [.macOS(.v15)],
+  products: [
+    .executable(name: "AdventOfCode", targets: ["AdventOfCode"]),
+  ],
   dependencies: [
     .package(
       url: "https://github.com/apple/swift-algorithms.git",
