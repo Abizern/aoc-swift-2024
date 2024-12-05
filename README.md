@@ -72,4 +72,5 @@ swiftformat .
 - [Day1: Historian Hysteria](https://abizern.dev/posts/aoc-day1-historian-hysteria/)
 - [Day2: Red-Nosed Reports](https://abizern.dev/posts/aoc-day2-red-nosed-reports/)
 - [Day3: Mull it Over](https://abizern.dev/posts/aoc-day3-mull-it-over/)
-- [Day4: Ceres Search](http://abizern.dev/posts/aoc-day4-ceres-search/)
+- [Day4: Ceres Search](https://abizern.dev/posts/aoc-day4-ceres-search/)
+- [Day5: Print Queue](https://abizern.dev/posts/aoc-day5-print-queue)
