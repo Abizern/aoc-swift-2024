@@ -1,6 +1,6 @@
 import Collections
 import Foundation
-import Parsing
+import AoCCommon
 
 struct Day01: AdventDay, Sendable {
   let data: String
@@ -46,22 +46,22 @@ struct Day01: AdventDay, Sendable {
 
 extension Day01 {
   func parseData(_ data: String) -> [(Int, Int)] {
-    let pairs = Parse(input: Substring.self) {
+    do {
+      return try InputParser().parse(data)
+    } catch {
+      fatalError("Unable to parse data \(error)")
+    }
+  }
+
+  struct InputParser: Parser {
+    var body: some Parser<Substring, [(Int, Int)]> {
       Many {
-        Digits()
-        "   "
-        Digits()
+        NumbersPair(separator: "   ")
       } separator: {
         "\n"
       } terminator: {
         End()
       }
-    }
-
-    do {
-      return try pairs.parse(data)
-    } catch {
-      fatalError("Unable to parse data \(error)")
     }
   }
 }
