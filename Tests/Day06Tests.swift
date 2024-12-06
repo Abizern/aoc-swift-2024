@@ -9,7 +9,10 @@ struct Day06Tests {
     @Test("Test parser implementation")
     func parseInput() {
       let day = Day06(data: testInput)
-
+      let rows = day.rows
+      #expect(rows.count == 10)
+      #expect(rows[0][0] == ".")
+      #expect(rows[9][9] == ".")
     }
   }
 
@@ -19,10 +22,8 @@ struct Day06Tests {
 
     @Test("Part1 example")
     func testPart1() async throws {
-      await withKnownIssue {
-        let result = try await day.part1()
-        #expect(result == 10)
-      }
+      let result = try await day.part1()
+      #expect(result == 41)
     }
 
     @Test("Part2 example")
