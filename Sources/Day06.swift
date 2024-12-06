@@ -57,9 +57,6 @@ struct Day06: AdventDay, Sendable {
 
       return count
     }
-    //      .map { pathResult(rows, obstacles: $0, grd: grd) }
-    //      .filter { if case .looped = $0 { true } else { false } }
-    //      .count
   }
 
   func evaluator(_ rows: [[Character]], grd: Guard) -> (Set<Position>) -> PathResult {
