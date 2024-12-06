@@ -7,7 +7,7 @@
 |   3 | Mull It Over       | 156388521 | 75920122 |                 |
 |   4 | Ceres Search       |      2462 |     1877 |                 |
 |   5 | Print Queue        |      5955 |     4030 |                 |
-|   6 |                    |           |          |                 |
+|   6 | Guard Gallivant    |      4711 |     1562 |                 |
 |   7 |                    |           |          |                 |
 |   8 |                    |           |          |                 |
 |   9 |                    |           |          |                 |
@@ -33,7 +33,7 @@
 
 | Period                    | number |
 |---------------------------+--------|
-| Achieved during the month |   10   |
+| Achieved during the month |     12 |
 | Achieved later            |        |
-| Total                     |   10   |
+| Total                     |     12 |
 |                           |        |
