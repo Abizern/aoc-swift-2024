@@ -16,7 +16,7 @@ struct Day06: AdventDay, Sendable {
 
   func part1() async throws -> Int {
     let (obstacles, grd) = extractObjects(rows)
-    let result = pathResult(rows, obstacles: obstacles, grd: grd)
+    let result = pathResult(rows, obstacles: obstacles, visited: Set(), grd: grd)
     guard case .exited(let visited) = result else {
       fatalError("There should not be a loop in part 1")
     }
@@ -25,29 +25,66 @@ struct Day06: AdventDay, Sendable {
   }
 
   func part2() async throws -> Int {
-    let (obstacles, grd) = extractObjects(rows)
-    let result = pathResult(rows, obstacles: obstacles, grd: grd)
-    guard case .exited(let visited) = result else {
-      fatalError("There should not be a loop to start with")
+    let width = rows[0].count
+    let height = rows.count
+    let objects = extractObjects(rows)
+    let obstacles = objects.0
+    var grd = objects.1
+    var visited = Set<Guard>()
+    var count = 0
+
+    while (0 ..< width).contains(grd.position.col), (0 ..< height).contains(grd.position.row) {
+      visited.insert(grd)
+
+      // Branch off by turning right and seeing if there is a loop
+      let turned = grd.turned
+      if shouldBranch(turned, obstacles: obstacles) {
+        if case .looped = pathResult(rows, obstacles: obstacles, visited: visited, grd: turned) {
+          count += 1
+        }
+      }
+
+      var next = grd.moved
+      if obstacles.contains(next.position) {
+        next = turned
+      }
+      grd = next
     }
 
-    let r = visited
-      .filter { $0 != grd.position }
-      .map { obstacles.union([$0]) }
-      .map { pathResult(rows, obstacles: $0, grd: grd) }
-      .filter { if case .looped = $0 { true } else { false } }
-      .count
+    return count
+  }
 
-    return r
+  func shouldBranch(_ grd: Guard, obstacles: Set<Position>) -> Bool {
+    let row = grd.position.row
+    let col = grd.position.col
+
+    switch grd.direction {
+    case .up
+      where obstacles.filter { $0.col == col }.filter { $0.row < row }.count > 0:
+      return true
+    case .right
+      where obstacles.filter { $0.row == row }.filter { $0.col > col }.count > 0:
+      return true
+    case .down
+      where obstacles.filter { $0.col == col }.filter { $0.row > row }.count > 0:
+      return true
+    case .left
+      where obstacles.filter { $0.row == row }.filter { $0.col < col }.count > 0:
+      return true
+    default:
+      break
+    }
+
+    return false
   }
 }
 
 extension Day06 {
-  func pathResult(_ rows: [[Character]], obstacles: Set<Position>, grd: Guard) -> PathResult {
+  func pathResult(_ rows: [[Character]], obstacles: Set<Position>, visited: Set<Guard>, grd: Guard) -> PathResult {
     let width = rows[0].count
     let height = rows.count
     var grd = grd
-    var visited = Set<Guard>()
+    var visited = visited
 
     while (0 ..< width).contains(grd.position.col), (0 ..< height).contains(grd.position.row) {
       guard !visited.contains(grd)
