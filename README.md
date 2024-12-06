@@ -1,10 +1,19 @@
-# Advent of Code Swift Template for Swift Solutions
+# Advent of Code 2024 Solutions in Swift
 
-[![Language](https://img.shields.io/badge/language-Swift-red.svg)](https://swift.org)
+[![Language](https://img.shields.io/badge/language-Swift-blue.svg)](https://swift.org)
 
 Daily programming puzzles at [Advent of Code](<https://adventofcode.com/>), by
 [Eric Wastl](<http://was.tl/>). This is a small example starter project for
 building Advent of Code solutions.
+
+## Notes to solutions for 2024:
+
+- [Day1: Historian Hysteria](https://abizern.dev/posts/aoc-day1-historian-hysteria/)
+- [Day2: Red-Nosed Reports](https://abizern.dev/posts/aoc-day2-red-nosed-reports/)
+- [Day3: Mull it Over](https://abizern.dev/posts/aoc-day3-mull-it-over/)
+- [Day4: Ceres Search](https://abizern.dev/posts/aoc-day4-ceres-search/)
+- [Day5: Print Queue](https://abizern.dev/posts/aoc-day5-print-queue/)
+- [Day6: Guard Gallivant](https://abizern.dev/posts/aoc-day6-guard-gallivant/)
 
 ## Template 
 
@@ -67,10 +76,3 @@ I use Swiftformat so this works for me:
 swiftformat .
 ```
 
-## Notes to solutions:
-
-- [Day1: Historian Hysteria](https://abizern.dev/posts/aoc-day1-historian-hysteria/)
-- [Day2: Red-Nosed Reports](https://abizern.dev/posts/aoc-day2-red-nosed-reports/)
-- [Day3: Mull it Over](https://abizern.dev/posts/aoc-day3-mull-it-over/)
-- [Day4: Ceres Search](https://abizern.dev/posts/aoc-day4-ceres-search/)
-- [Day5: Print Queue](https://abizern.dev/posts/aoc-day5-print-queue)
