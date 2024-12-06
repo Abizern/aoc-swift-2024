@@ -15,16 +15,47 @@ struct Day06: AdventDay, Sendable {
   }
 
   func part1() async throws -> Int {
-    let rows = rows
+    let (obstacles, grd) = extractObjects(rows)
+    let result = pathResult(rows, obstacles: obstacles, grd: grd)
+    guard case .exited(let visited) = result else {
+      fatalError("There should not be a loop in part 1")
+    }
+
+    return visited.count
+  }
+
+  func part2() async throws -> Int {
+    let (obstacles, grd) = extractObjects(rows)
+    let result = pathResult(rows, obstacles: obstacles, grd: grd)
+    guard case .exited(let visited) = result else {
+      fatalError("There should not be a loop to start with")
+    }
+
+    let r = visited
+      .filter { $0 != grd.position }
+      .map { obstacles.union([$0]) }
+      .map { pathResult(rows, obstacles: $0, grd: grd) }
+      .filter { if case .looped = $0 { true } else { false } }
+      .count
+
+    return r
+  }
+}
+
+extension Day06 {
+  func pathResult(_ rows: [[Character]], obstacles: Set<Position>, grd: Guard) -> PathResult {
     let width = rows[0].count
     let height = rows.count
-    let objects = extractObjects(rows)
-    let obstacles = objects.0
-    var grd = objects.1
-    var visited = Set<Position>()
+    var grd = grd
+    var visited = Set<Guard>()
 
     while (0 ..< width).contains(grd.position.col), (0 ..< height).contains(grd.position.row) {
-      visited.insert(grd.position)
+      guard !visited.contains(grd)
+      else {
+        return PathResult.looped
+      }
+
+      visited.insert(grd)
       var next = grd.moved
       if obstacles.contains(next.position) {
         next = grd.turned
@@ -32,7 +63,7 @@ struct Day06: AdventDay, Sendable {
       grd = next
     }
 
-    return visited.count
+    return PathResult.exited(Set(visited.map(\.position)))
   }
 }
 
@@ -55,7 +86,7 @@ extension Day06 {
     }
   }
 
-  struct Guard {
+  struct Guard: Hashable {
     let position: Position
     let direction: Direction
 
@@ -81,6 +112,11 @@ extension Day06 {
       case .left: Guard((position.row, position.col), direction: .up)
       }
     }
+  }
+
+  enum PathResult: Equatable {
+    case exited(Set<Position>)
+    case looped
   }
 }
 
