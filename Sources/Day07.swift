@@ -1,7 +1,7 @@
 import Foundation
+import Parsing
 
 struct Day07: AdventDay, Sendable {
-  // Save your data in a corresponding text file in the `Data` directory.
   let data: String
   let day = 7
   let puzzleName: String = "--- Day 0: Placeholder! ---"
@@ -10,11 +10,65 @@ struct Day07: AdventDay, Sendable {
     self.data = data
   }
 
-  // Replace this with your solution for the first part of the day's challenge.
+  var calibrations: [Calibration] {
+    do {
+      return try CalibrationsParser().parse(data)
+    } catch {
+      fatalError("Unable to parse data: \(error)")
+    }
+  }
+
   func part1() async throws -> Int {
-    0
+    calibrations.filter(\.isValid).map(\.target).reduce(0, +)
   }
 }
 
-// Add any extra code and types in here to separate it from the required behaviour
-extension Day07 {}
+extension Day07 {
+  struct Calibration: Equatable, Sendable {
+    let target: Int
+    let values: [Int]
+
+    var isValid: Bool {
+      canMakeTarget(target, values: values[...])
+    }
+
+    private func canMakeTarget(_ target: Int, values: Array<Int>.SubSequence) -> Bool {
+      var values = values
+      guard let nextValue = values.popLast() else { fatalError("Out of bounds") }
+      guard values.count > 0 else { return target == nextValue }
+
+      let branch1 = target % nextValue == 0 && canMakeTarget(target / nextValue, values: values)
+      let branch2 = target > nextValue && canMakeTarget(target - nextValue, values: values)
+
+      return branch1 || branch2
+    }
+  }
+}
+
+extension Day07 {
+  struct CalibrationParser: Parser {
+    var body: some Parser<Substring, Calibration> {
+      Parse(Calibration.init) {
+        Digits()
+        ": "
+        Many {
+          Digits()
+        } separator: {
+          " "
+        }
+      }
+    }
+  }
+
+  struct CalibrationsParser: Parser {
+    var body: some Parser<Substring, [Calibration]> {
+      Many {
+        CalibrationParser()
+      } separator: {
+        "\n"
+      } terminator: {
+        End()
+      }
+    }
+  }
+}
