@@ -21,6 +21,10 @@ struct Day07: AdventDay, Sendable {
   func part1() async throws -> Int {
     calibrations.filter(\.isValid).map(\.target).reduce(0, +)
   }
+
+  func part2() async throws -> Int {
+    calibrations.filter(\.isValidWithConcoatenation).map(\.target).reduce(0, +)
+  }
 }
 
 extension Day07 {
@@ -32,6 +36,10 @@ extension Day07 {
       canMakeTarget(target, values: values[...])
     }
 
+    var isValidWithConcoatenation: Bool {
+      canConcatenate(target, values: values[...])
+    }
+
     private func canMakeTarget(_ target: Int, values: Array<Int>.SubSequence) -> Bool {
       var values = values
       guard let nextValue = values.popLast() else { fatalError("Out of bounds") }
@@ -41,6 +49,21 @@ extension Day07 {
       let branch2 = target > nextValue && canMakeTarget(target - nextValue, values: values)
 
       return branch1 || branch2
+    }
+
+    private func canConcatenate(_ target: Int, values: Array<Int>.SubSequence) -> Bool {
+      var values = values
+      guard let nextValue = values.popLast() else { fatalError("Out of bounds") }
+      guard values.count > 0 else { return target == nextValue }
+
+      let strTarget = String(target)
+      let strNextValue = String(nextValue)
+
+      let branch1 = target % nextValue == 0 && canConcatenate(target / nextValue, values: values)
+      let branch2 = target > nextValue && canConcatenate(target - nextValue, values: values)
+      let branch3 = strTarget.count > strNextValue.count && strTarget.hasSuffix(strNextValue) && canConcatenate(strTarget.remove(strNextValue), values: values)
+
+      return branch1 || branch2 || branch3
     }
   }
 }
@@ -70,5 +93,13 @@ extension Day07 {
         End()
       }
     }
+  }
+}
+
+extension String {
+  func remove(_ suffix: String) -> Int {
+    let suffixLCount = suffix.count
+    let newStr = self[..<index(endIndex, offsetBy: -suffixLCount)]
+    return Int(newStr)!
   }
 }
