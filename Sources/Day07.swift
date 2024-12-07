@@ -45,8 +45,10 @@ extension Day07 {
       guard let nextValue = values.popLast() else { fatalError("Out of bounds") }
       guard values.count > 0 else { return target == nextValue }
 
-      return target % nextValue == 0 && canMakeTarget(target / nextValue, values: values)
-        || target > nextValue && canMakeTarget(target - nextValue, values: values)
+      let branch1 = target % nextValue == 0 && canMakeTarget(target / nextValue, values: values)
+      let branch2 = target > nextValue && canMakeTarget(target - nextValue, values: values)
+
+      return branch1 || branch2
     }
 
     private func canConcatenate(_ target: Int, values: Array<Int>.SubSequence) -> Bool {
@@ -57,9 +59,11 @@ extension Day07 {
       let strTarget = String(target)
       let strNextValue = String(nextValue)
 
-      return target % nextValue == 0 && canConcatenate(target / nextValue, values: values)
-        || target > nextValue && canConcatenate(target - nextValue, values: values)
-        || strTarget.count > strNextValue.count && strTarget.hasSuffix(strNextValue) && canConcatenate(strTarget.remove(strNextValue), values: values)
+      let branch1 = target % nextValue == 0 && canConcatenate(target / nextValue, values: values)
+      let branch2 = target > nextValue && canConcatenate(target - nextValue, values: values)
+      let branch3 = strTarget.count > strNextValue.count && strTarget.hasSuffix(strNextValue) && canConcatenate(strTarget.remove(strNextValue), values: values)
+
+      return branch1 || branch2 || branch3
     }
   }
 }
