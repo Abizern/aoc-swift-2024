@@ -14,6 +14,7 @@ building Advent of Code solutions.
 - [Day4: Ceres Search](https://abizern.dev/posts/aoc-day4-ceres-search/)
 - [Day5: Print Queue](https://abizern.dev/posts/aoc-day5-print-queue/)
 - [Day6: Guard Gallivant](https://abizern.dev/posts/aoc-day6-guard-gallivant/)
+- [Day7: Bridge Repair](https://abizern.dev/posts/aoc-day7-bridge-repair/)
 
 ## Template 
 

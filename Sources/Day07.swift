@@ -61,7 +61,9 @@ extension Day07 {
 
       let branch1 = target % nextValue == 0 && canConcatenate(target / nextValue, values: values)
       let branch2 = target > nextValue && canConcatenate(target - nextValue, values: values)
-      let branch3 = strTarget.count > strNextValue.count && strTarget.hasSuffix(strNextValue) && canConcatenate(strTarget.remove(strNextValue), values: values)
+      let branch3 = strTarget.count > strNextValue.count
+      && strTarget.hasSuffix(strNextValue)
+      && canConcatenate(strTarget.remove(strNextValue), values: values)
 
       return branch1 || branch2 || branch3
     }
