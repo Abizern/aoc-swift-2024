@@ -15,6 +15,7 @@ building Advent of Code solutions.
 - [Day5: Print Queue](https://abizern.dev/posts/aoc-day5-print-queue/)
 - [Day6: Guard Gallivant](https://abizern.dev/posts/aoc-day6-guard-gallivant/)
 - [Day7: Bridge Repair](https://abizern.dev/posts/aoc-day7-bridge-repair/)
+- [Day8: Resonant Collinearity](https://abizern.dev/posts/aoc-day8-resonant-collinearity/)
 
 ## Template 
 
