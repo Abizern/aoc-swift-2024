@@ -33,10 +33,24 @@ struct Day08: AdventDay, Sendable {
 
     return Set(product(antennas, antennas)
       .compactMap { source, target in
-        source.antinodeWidth(target)
+        source.antinode(target)
       }
       .filter(boundsChecker))
       .count
+  }
+
+  func part2() async throws -> Int {
+    let (antennas, boundaries) = input
+    let boundsChecker = boundsChecker(boundaries)
+
+    let ans = Set(product(antennas, antennas)
+      .compactMap { source, target in
+        source.antinodes(target, checker: boundsChecker)
+      }
+      .flatMap { $0 })
+      .count
+
+    return ans
   }
 }
 
@@ -59,9 +73,22 @@ extension Day08 {
     let row: Int
     let column: Int
 
+    func offset(_ point: Point) -> Offset {
+      Offset(dRow: point.row - row, dCol: point.column - column)
+    }
+
+    func add(_ offset: Offset) -> Point {
+      Point(row: row + offset.dRow, column: column + offset.dCol)
+    }
+
     var description: String {
       "(\(row), \(column))"
     }
+  }
+
+  struct Offset {
+    let dRow: Int
+    let dCol: Int
   }
 
   struct Antenna: Hashable {
@@ -73,17 +100,38 @@ extension Day08 {
       self.frequency = frequency
     }
 
-    func antinodeWidth(_ antenna: Antenna) -> Point? {
+    func offset(_ antenna: Antenna) -> Offset {
+      Offset(dRow: antenna.point.row - point.row, dCol: antenna.point.column - point.column)
+    }
+
+    func antinode(_ antenna: Antenna) -> Point? {
       guard frequency == antenna.frequency,
             self != antenna
       else {
         return nil
       }
 
-      let dRow = antenna.point.row - point.row
-      let dColumn = antenna.point.column - point.column
+      let offset = point.offset(antenna.point)
+      return antenna.point.add(offset)
+    }
 
-      return Point(row: antenna.point.row + dRow, column: antenna.point.column + dColumn)
+    func antinodes(_ antenna: Antenna, checker: (Point) -> Bool) -> [Point]? {
+      guard frequency == antenna.frequency,
+            self != antenna
+      else {
+        return nil
+      }
+
+      let offset = point.offset(antenna.point)
+      var antinodes: [Point] = [antenna.point]
+      var antinode = antenna.point.add(offset)
+
+      while checker(antinode) {
+        antinodes.append(antinode)
+        antinode = antinode.add(offset)
+      }
+
+      return antinodes
     }
   }
 }
