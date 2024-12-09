@@ -16,6 +16,7 @@ building Advent of Code solutions.
 - [Day6: Guard Gallivant](https://abizern.dev/posts/aoc-day6-guard-gallivant/)
 - [Day7: Bridge Repair](https://abizern.dev/posts/aoc-day7-bridge-repair/)
 - [Day8: Resonant Collinearity](https://abizern.dev/posts/aoc-day8-resonant-collinearity/)
+- [Day9: Disk Fragmenter](https://abizern.dev/posts/aoc-day9-disk-fragmenter/)
 
 ## Template 
 
