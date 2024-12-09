@@ -9,7 +9,8 @@ struct Day09Tests {
     @Test("Test parser implementation")
     func parseInput() {
       let day = Day09(data: testInput)
-
+      let diskMap = day.diskMap
+      #expect(diskMap.count == 19)
     }
   }
 
@@ -19,10 +20,8 @@ struct Day09Tests {
 
     @Test("Part1 example")
     func testPart1() async throws {
-      await withKnownIssue {
-        let result = try await day.part1()
-        #expect(result == 10)
-      }
+      let result = try await day.part1()
+      #expect(result == 1928)
     }
 
     @Test("Part2 example")
@@ -35,6 +34,4 @@ struct Day09Tests {
   }
 }
 
-private let testInput =
-  """
-  """
+private let testInput = "2333133121414131402"
