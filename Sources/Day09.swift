@@ -93,19 +93,7 @@ extension Day09 {
 
     return Array(input)
   }
-
-  func compressEmptySpace(_ input: [Descriptor]) -> [Descriptor] {
-    guard !input.isEmpty else { return [] }
-    return input.reduce(into: [Descriptor]()) { result, descriptor in
-      switch (result.last, descriptor) {
-      case (.empty(let len1), .empty(let len2)):
-        result = result.dropLast() + [.empty(length: len1 + len2)]
-      default:
-        result.append(descriptor)
-      }
-    }
-  }
-
+  
   func checksum(_ input: [Int]) -> Int {
     input.enumerated().map(*).reduce(0, +)
   }
