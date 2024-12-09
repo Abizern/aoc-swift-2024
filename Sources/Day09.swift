@@ -14,21 +14,24 @@ struct Day09: AdventDay, Sendable {
 
   var diskMap: [Descriptor] {
     parseData().enumerated().map { n, number in
-      switch n % 2 {
-      case 0:
-        .file(id: n / 2, length: number)
-      default:
-        .empty(length: number)
-      }
+      n % 2 == 0 ? .file(id: n / 2, length: number) : .empty(length: number)
     }
   }
 
   func part1() async throws -> Int {
     let files = Deque(diskMap.flatMap(\.expanded))
     let rearranged = rearrange(files)
-    let checksum = rearranged.enumerated().map(*).reduce(0, +)
 
-    return checksum
+    return checksum(rearranged)
+  }
+
+  func part2() async throws -> Int {
+    defrag(diskMap)
+      .flatMap(\.expanded)
+      .map { $0 > Int.min ? $0 : 0 }
+      .enumerated()
+      .map { $0 * $1 }
+      .reduce(0, +)
   }
 }
 
@@ -52,6 +55,60 @@ extension Day09 {
 
     return accumulator
   }
+
+  func defrag(_ input: [Descriptor]) -> [Descriptor] {
+    var input = input[...]
+    var highestIndex = input.last!.fileId
+
+    while highestIndex > 0 {
+      guard let candidateIndex = input.firstIndex(where: { $0.fileId == highestIndex }) else { fatalError("We should have fileID \(highestIndex)") }
+      let candidateLength = input[candidateIndex].length
+
+      guard let targetIndex = input.firstIndex(
+        where: { descriptor in
+          if case .empty(let length) = descriptor, length >= candidateLength {
+            true
+          } else {
+            false
+          }
+        }
+      ),
+        targetIndex < candidateIndex
+      else {
+        highestIndex -= 1
+        continue
+      }
+
+      input.replaceSubrange(candidateIndex ... candidateIndex, with: [.empty(length: candidateLength)])
+      let targetLength = input[targetIndex].length
+      let newTarget = Descriptor.file(id: highestIndex, length: candidateLength)
+      if targetLength == candidateLength {
+        input.replaceSubrange(targetIndex ... targetIndex, with: [newTarget])
+      } else {
+        input.replaceSubrange(targetIndex ... targetIndex, with: [newTarget, .empty(length: targetLength - candidateLength)])
+      }
+
+      highestIndex -= 1
+    }
+
+    return Array(input)
+  }
+
+  func compressEmptySpace(_ input: [Descriptor]) -> [Descriptor] {
+    guard !input.isEmpty else { return [] }
+    return input.reduce(into: [Descriptor]()) { result, descriptor in
+      switch (result.last, descriptor) {
+      case (.empty(let len1), .empty(let len2)):
+        result = result.dropLast() + [.empty(length: len1 + len2)]
+      default:
+        result.append(descriptor)
+      }
+    }
+  }
+
+  func checksum(_ input: [Int]) -> Int {
+    input.enumerated().map(*).reduce(0, +)
+  }
 }
 
 extension Day09 {
@@ -68,6 +125,24 @@ extension Day09 {
       }
     }
 
+    var fileId: Int {
+      switch self {
+      case .file(id: let id, length: _):
+        id
+      case .empty(length: _):
+        Int.min
+      }
+    }
+
+    var length: Int {
+      switch self {
+      case .file(_, let length):
+        length
+      case .empty(let length):
+        length
+      }
+    }
+
     var description: String {
       switch self {
       case .file(let id, let length):
@@ -78,6 +153,8 @@ extension Day09 {
     }
   }
 }
+
+// MARK: - Parsing
 
 extension Day09 {
   func parseData() -> [Int] {
