@@ -23,20 +23,14 @@ struct Day10Tests {
       #expect(day.trailHeads(day.grid).count == 9)
     }
 
-    @Test("Score")
-    func score() {
+    @Test("TrailCount")
+    func trailCount() {
       let day = Day10(data: testInput)
       let grid = day.grid
-      #expect(day.score(grid, start: Cell(0, 2)) == 5)
-      #expect(day.score(grid, start: Cell(0, 4)) == 6)
-    }
-
-    @Test("Rating")
-    func rating() {
-      let day = Day10(data: testInput)
-      let grid = day.grid
-      #expect(day.rating(grid, start: Cell(0, 2)) == 20)
-      #expect(day.rating(grid, start: Cell(0, 4)) == 24)
+      #expect(day.trailCount(grid, start: Cell(0, 2), allPaths: false) == 5)
+      #expect(day.trailCount(grid, start: Cell(0, 4), allPaths: false) == 6)
+      #expect(day.trailCount(grid, start: Cell(0, 2), allPaths: true) == 20)
+      #expect(day.trailCount(grid, start: Cell(0, 4), allPaths: true) == 24)
     }
   }
 
