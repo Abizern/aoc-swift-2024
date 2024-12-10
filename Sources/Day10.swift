@@ -1,20 +1,85 @@
+import Algorithms
+import AoCCommon
 import Foundation
 
 struct Day10: AdventDay, Sendable {
-  // Save your data in a corresponding text file in the `Data` directory.
   let data: String
   let day = 10
-  let puzzleName: String = "--- Day 0: Placeholder! ---"
+  let puzzleName: String = "--- Day 10: Hoof It ---"
 
   init(data: String) {
     self.data = data
   }
 
-  // Replace this with your solution for the first part of the day's challenge.
+  var grid: Grid<Int> {
+    do {
+      return try SingleDigitGridParser().parse(data)
+    } catch {
+      fatalError("Unable to parse data because \(error)")
+    }
+  }
+
   func part1() async throws -> Int {
-    0
+    trailHeads(grid).map { score(grid, start: $0) }.reduce(0, +)
+  }
+
+  func part2() async throws -> Int {
+    trailHeads(grid).map { rating(grid, start: $0) }.reduce(0, +)
   }
 }
 
-// Add any extra code and types in here to separate it from the required behaviour
-extension Day10 {}
+extension Day10 {
+  func trailHeads(_ grid: Grid<Int>) -> Set<Cell> {
+    grid.filter { $0 == 0 }
+  }
+
+  func score(_ grid: Grid<Int>, start: Cell) -> Int {
+    var count = 0
+    var queue = Deque<Cell>([start])
+    var ends = Set<Cell>()
+
+    while !queue.isEmpty {
+      let cursor = queue.removeFirst()
+
+      guard let cursorValue = grid.element(cursor),
+            cursorValue != 9
+      else {
+        if !ends.contains(cursor) {
+          count += 1
+          ends.insert(cursor)
+        }
+        continue
+      }
+
+      let neighbours = grid
+        .neighbours(cursor, includeDiagonals: false)
+        .filter { grid.element($0)! - cursorValue == 1 }
+      queue.append(contentsOf: neighbours)
+    }
+
+    return count
+  }
+
+  func rating(_ grid: Grid<Int>, start: Cell) -> Int {
+    var count = 0
+    var queue = Deque<Cell>([start])
+
+    while !queue.isEmpty {
+      let cursor = queue.removeFirst()
+
+      guard let cursorValue = grid.element(cursor),
+            cursorValue != 9
+      else {
+        count += 1
+        continue
+      }
+
+      let neighbours = grid
+        .neighbours(cursor, includeDiagonals: false)
+        .filter { grid.element($0)! - cursorValue == 1 }
+      queue.append(contentsOf: neighbours)
+    }
+
+    return count
+  }
+}

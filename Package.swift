@@ -15,11 +15,11 @@ let package = Package(
     .executable(name: "AdventOfCode", targets: ["AdventOfCode"]),
   ],
   dependencies: [
-//    .package(
-//      url: "https://github.com/Abizern/AoCCommon",
-//      from: "0.0.1"
-//    ),
-    .package(path: "../AoCCommon"),
+    .package(
+      url: "https://github.com/Abizern/AoCCommon",
+      from: "0.0.2"
+    ),
+//    .package(path: "../AoCCommon"),
     .package(path: "NewDayPlugin"),
     .package(
       url: "https://github.com/apple/swift-algorithms.git",

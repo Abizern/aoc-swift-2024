@@ -1,6 +1,6 @@
+import AoCCommon
 import Collections
 import Foundation
-import AoCCommon
 
 struct Day01: AdventDay, Sendable {
   let data: String
@@ -56,7 +56,7 @@ extension Day01 {
   struct InputParser: Parser {
     var body: some Parser<Substring, [(Int, Int)]> {
       Many {
-        NumbersPair(separator: "   ")
+        NumberPair(separator: "   ")
       } separator: {
         "\n"
       } terminator: {
