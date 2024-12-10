@@ -21,13 +21,13 @@ struct Day10: AdventDay, Sendable {
 
   func part1() async throws -> Int {
     trailHeads(grid)
-      .map { trailCount(grid, start: $0, allPaths: false) }
+      .map { score(grid, start: $0) }
       .reduce(0, +)
   }
 
   func part2() async throws -> Int {
     trailHeads(grid)
-      .map { trailCount(grid, start: $0, allPaths: true) }
+      .map { rating(grid, start: $0) }
       .reduce(0, +)
   }
 }
@@ -67,4 +67,13 @@ extension Day10 {
 
     return count
   }
+
+  func score(_ grid: Grid<Int>, start: Cell) -> Int {
+    trailCount(grid, start: start)
+  }
+
+  func rating(_ grid: Grid<Int>, start: Cell) -> Int {
+    trailCount(grid, start: start, allPaths: true)
+  }
+
 }
