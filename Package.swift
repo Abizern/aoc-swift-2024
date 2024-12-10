@@ -17,7 +17,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/Abizern/AoCCommon",
-      from: "0.0.2"
+      from: "0.0.4"
     ),
 //    .package(path: "../AoCCommon"),
     .package(path: "NewDayPlugin"),

@@ -34,6 +34,41 @@ struct Day10Tests {
     }
   }
 
+  @Suite("GameplayKit based Tests")
+  struct GameplayKitTests {
+    @Test("Grid creation")
+    func gridCreation() {
+      let day = Day10(data: testInput)
+      let graph = day.gridGraph
+      #expect(graph.gridWidth == 8)
+      #expect(graph.gridHeight == 8)
+    }
+
+    @Test("Trailheads")
+    func trailheads() {
+      let day = Day10(data: testInput)
+      #expect(day.trailHeads(day.gridGraph).count == 9)
+    }
+
+    @Test("TrailEnds")
+    func trailEnds() {
+      let day = Day10(data: testInput)
+      #expect(day.trailEnds(day.gridGraph).count == 7)
+    }
+
+    @Test("Score")
+    func score() {
+      let day = Day10(data: testInput)
+      #expect(day.score(day.gridGraph) == 36)
+    }
+
+    @Test("Rating")
+    func rating() {
+      let day = Day10(data: testInput)
+      #expect(day.rating(day.gridGraph) == 81)
+    }
+  }
+
   @Suite("Tests on sample inputs")
   struct SolutionsTests {
     let day = Day10(data: testInput)
