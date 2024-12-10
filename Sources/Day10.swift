@@ -32,6 +32,7 @@ struct Day10: AdventDay, Sendable {
   }
 }
 
+// MARK: - Using Foundation
 extension Day10 {
   func trailHeads(_ grid: Grid<Int>) -> Set<Cell> {
     grid.filter { $0 == 0 }
@@ -75,5 +76,6 @@ extension Day10 {
   func rating(_ grid: Grid<Int>, start: Cell) -> Int {
     trailCount(grid, start: start, allPaths: true)
   }
-
 }
+
+// MARK: - Using GamePlayKit
