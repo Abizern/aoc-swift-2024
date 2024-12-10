@@ -93,7 +93,7 @@ extension Day09 {
 
     return Array(input)
   }
-  
+
   func checksum(_ input: [Int]) -> Int {
     input.enumerated().map(*).reduce(0, +)
   }
