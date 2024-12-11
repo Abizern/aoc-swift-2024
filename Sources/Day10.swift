@@ -13,7 +13,7 @@ struct Day10: AdventDay, Sendable {
   init(data: String) {
     self.data = data
     do {
-      self.rows = try SingleDigitLinesParser().parse(data)
+      rows = try SingleDigitLinesParser().parse(data)
     } catch {
       fatalError("Unable to parse input \(error)")
     }
@@ -43,6 +43,7 @@ struct Day10: AdventDay, Sendable {
 }
 
 // MARK: - Using Foundation
+
 extension Day10 {
   func trailHeads(_ grid: Grid<Int>) -> Set<Cell> {
     grid.filter { $0 == 0 }
@@ -89,6 +90,7 @@ extension Day10 {
 }
 
 // MARK: - Using GamePlayKit
+
 extension Day10 {
   typealias GridGraph = GKGridGraph<GKGridGraphNode>
   typealias Node = GKGridGraphNode
@@ -111,11 +113,11 @@ extension Day10 {
       let (row, column) = (Int(position.y), Int(position.x))
 
       for neighbour in node.connectedNodes {
-        let neighbour = neighbour as! Node 
+        let neighbour = neighbour as! Node
         let nPosition = neighbour.gridPosition
         let (nRow, nColumn) = (Int(nPosition.y), Int(nPosition.x))
 
-        if rows[nRow][nColumn] != rows[row][column]  + 1 {
+        if rows[nRow][nColumn] != rows[row][column] + 1 {
           node.removeConnections(to: [neighbour], bidirectional: false)
         }
       }
@@ -139,14 +141,14 @@ extension Day10 {
         guard let node = node as? Node else { return nil }
         return node
       }
-      .filter { node  in
+      .filter { node in
         let position = node.gridPosition
         let (row, column) = (Int(position.y), Int(position.x))
         return rows[row][column] == value
       }
   }
 
-  func countConnections(_ graph: GridGraph, head: Node, ends: [Node]) -> Int {
+  func countConnections(_: GridGraph, head: Node, ends: [Node]) -> Int {
     var queue = Deque<Node>([head])
     var seen = Set<Node>()
 
@@ -161,7 +163,7 @@ extension Day10 {
     return seen.count
   }
 
-  func countPaths(_ graph: GridGraph, head: Node, ends: [Node]) -> Int {
+  func countPaths(_: GridGraph, head: Node, ends: [Node]) -> Int {
     var count = 0
     var queue = Deque<Node>([head])
 
@@ -175,7 +177,6 @@ extension Day10 {
     }
     return count
   }
-
 
   func score(_ graph: GridGraph) -> Int {
     let heads = trailHeads(graph)
@@ -199,6 +200,4 @@ extension Day10 {
 
     return score
   }
-
 }
-
