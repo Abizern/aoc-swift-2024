@@ -12,7 +12,7 @@
 |   8 | Resonant Collinearity |           285 |             944 |                 |
 |   9 | Disk Fragmenter       | 6382875730645 |   6420913943576 |                 |
 |  10 | Hoof It               |           629 |            1242 |                 |
-|  11 |                       |               |                 |                 |
+|  11 | Plutonian Pebbles     |        239714 | 284973560658514 |                 |
 |  12 |                       |               |                 |                 |
 |  13 |                       |               |                 |                 |
 |  14 |                       |               |                 |                 |
@@ -33,8 +33,8 @@
 
 | Period                    | number |
 |---------------------------+--------|
-| Achieved during the month |     20 |
+| Achieved during the month |     22 |
 | Achieved later            |        |
-| Total                     |     20 |
+| Total                     |     22 |
 |                           |        |
 #+TBLFM: @4$2=vsum(@2..@3)
