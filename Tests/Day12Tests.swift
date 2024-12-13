@@ -27,10 +27,8 @@ struct Day12Tests {
 
     @Test("Part2 example")
     func testPart2() async throws {
-      await withKnownIssue {
-        let result = try await day.part2()
-        #expect(result == 1206)
-      }
+      let result = try await day.part2()
+      #expect(result == 1206)
     }
   }
 }
@@ -47,12 +45,4 @@ private let testInput =
   MIIIIIJJEE
   MIIISIJEEE
   MMMISSJEEE
-  """
-
-private let testInput1 =
-  """
-  AAAA
-  BBCD
-  BBCC
-  EEEC
   """

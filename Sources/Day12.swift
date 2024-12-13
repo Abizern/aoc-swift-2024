@@ -21,6 +21,13 @@ struct Day12: AdventDay, Sendable {
 
     return regions.map(price).reduce(0, +)
   }
+
+  func part2() async throws -> Int {
+    let farm = farm(from: rows)
+    let regions = regions(from: farm, rows: rows)
+
+    return regions.map { newPrice($0, rows: rows) }.reduce(0, +)
+  }
 }
 
 extension Day12 {
@@ -99,5 +106,115 @@ extension Day12 {
     }
 
     return area * perimeter
+  }
+}
+
+extension Day12 {
+  struct Edge: Hashable {
+    enum Direction: Hashable {
+      case top, right, bottom, left
+    }
+
+    let position: vector_int2
+    let direction: Direction
+
+    var neighbours: [Edge] {
+      let x = position.x
+      let y = position.y
+      switch direction {
+      case .top, .bottom:
+        return [
+          Edge(position: vector_int2(x: x + 1, y: y), direction: direction),
+          Edge(position: vector_int2(x: x - 1, y: y), direction: direction),
+        ]
+      case .right, .left:
+        return [
+          Edge(position: vector_int2(x: x, y: y + 1), direction: direction),
+          Edge(position: vector_int2(x: x, y: y - 1), direction: direction),
+        ]
+      }
+    }
+  }
+
+  func edges(for region: Set<Node>) -> Set<Edge> {
+    var edges: Set<Edge> = []
+
+    for node in region {
+      let position = node.gridPosition
+      let above = position.above
+      let below = position.below
+      let left = position.left
+      let right = position.right
+
+      let neighbours = node.connectedNodes.map { $0 as! Node }.map(\.gridPosition)
+      if !neighbours.contains(above) {
+        edges.insert(Edge(position: position, direction: .top))
+      }
+
+      if !neighbours.contains(below) {
+        edges.insert(Edge(position: position, direction: .bottom))
+      }
+
+      if !neighbours.contains(left) {
+        edges.insert(Edge(position: position, direction: .left))
+      }
+
+      if !neighbours.contains(right) {
+        edges.insert(Edge(position: position, direction: .right))
+      }
+    }
+    return edges
+  }
+
+  func sides(for region: Set<Node>) -> Int {
+    let edges = edges(for: region)
+    var totalSides = 0
+    var seen = Set<Edge>()
+
+    for edge in edges {
+      guard !seen.contains(edge) else { continue }
+      var stack = Deque<Edge>([edge])
+
+      while !stack.isEmpty {
+        let current = stack.removeFirst()
+        guard !seen.contains(current) else { continue }
+        seen.insert(current)
+
+        for neighbour in current.neighbours {
+          guard !seen.contains(neighbour) else { continue }
+          if edges.contains(neighbour) {
+            stack.append(neighbour)
+          }
+        }
+      }
+
+      totalSides += 1
+    }
+    return totalSides
+  }
+
+  func newPrice(_ region: Set<Node>, rows _: [[Character]]) -> Int {
+    let area = region.count
+    let sidesCount = sides(for: region)
+
+    return area * sidesCount
+  }
+}
+
+extension vector_int2 {
+  var above: vector_int2 {
+    vector_int2(x: x, y: y + 1)
+  }
+
+  var below: vector_int2 {
+    vector_int2(x: x, y: y - 1)
+  }
+
+  var right: vector_int2 {
+    vector_int2(x: x + 1, y: y)
+  }
+
+  var left: vector_int2 {
+    vector_int2(x: x - 1, y: y)
   }
 }
