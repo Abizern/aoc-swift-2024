@@ -18,6 +18,8 @@ building Advent of Code solutions.
 - [Day8: Resonant Collinearity](https://abizern.dev/posts/aoc-day8-resonant-collinearity/)
 - [Day9: Disk Fragmenter](https://abizern.dev/posts/aoc-day9-disk-fragmenter/)
 - [Day10: Hoof It](https://abizern.dev/posts/aoc-day10-hoof-it/)
+- [Day11: Plutonian Pebbles](https://abizern.dev/posts/aoc-day11-plutonian-pebbles/)
+- [Day12: Garden Groups](https://abizern.dev/posts/aoc-day12-garden-groups/)
 
 ## Template 
 
