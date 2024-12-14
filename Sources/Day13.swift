@@ -1,3 +1,4 @@
+import AoCCommon
 import Foundation
 import Parsing
 
@@ -19,7 +20,11 @@ struct Day13: AdventDay, Sendable {
   }
 
   func part1() async throws -> Int {
-    machines.compactMap(\.minimumCost).reduce(0, +)
+    machines.compactMap(\.costToWin).reduce(0, +)
+  }
+
+  func part2() async throws -> Int {
+    machines.map(\.corrected).compactMap((\.costToWin)).reduce(0, +)
   }
 }
 
@@ -45,6 +50,12 @@ extension Day13 {
       self.prize = prize
     }
 
+    var corrected: Machine {
+      let increment = 10000000000000
+      let NewPrize = Prize(x: prize.x + increment, y: prize.y + increment)
+      return Machine(buttonA: buttonA, buttonB: buttonB, prize: NewPrize)
+    }
+
     var minimumCost: Int? {
       var minimumCost: Int?
       for a in 0 ..< 100 {
@@ -62,6 +73,23 @@ extension Day13 {
       }
       return minimumCost
     }
+  }
+}
+
+extension Day13.Machine {
+  var costToWin: Int? {
+    guard let (a, b) = diophantineEEA(
+      ax: buttonA.dx,
+      bx: buttonB.dx,
+      ay: buttonA.dy,
+      by: buttonB.dy,
+      cx: prize.x,
+      cy: prize.y
+    )
+    else {
+      return nil
+    }
+    return 3 * a + b
   }
 }
 

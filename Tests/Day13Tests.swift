@@ -23,14 +23,6 @@ struct Day13Tests {
       let result = try await day.part1()
       #expect(result == 480)
     }
-
-    @Test("Part2 example")
-    func testPart2() async throws {
-      await withKnownIssue {
-        let result = try await day.part2()
-        #expect(result == 10)
-      }
-    }
   }
 }
 
