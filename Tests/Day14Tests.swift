@@ -17,7 +17,7 @@ struct Day14Tests {
   @Suite("Tests on sample inputs")
   struct SolutionsTests {
     let day = Day14(data: testInput)
-    
+
     @Test("Part1 example")
     func testPart1() async throws {
       let position = day.positionFn(width: 11, height: 7, time: 100)
@@ -25,7 +25,7 @@ struct Day14Tests {
       let guards = day.guards
       let positions = guards.map(position)
       let result = safety(positions)
-      
+
       #expect(result == 12)
     }
   }

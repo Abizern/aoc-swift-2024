@@ -1,6 +1,6 @@
+import AoCCommon
 import Foundation
 import Parsing
-import AoCCommon
 
 struct Day14: AdventDay, Sendable {
   let data: String
@@ -31,7 +31,7 @@ struct Day14: AdventDay, Sendable {
     var iteration = 0
     let safetyFn = safetyFn2(width: 101, height: 103)
     let range = 101 * 103 // after this things will be repeatin themselves
-    var guards = self.guards
+    var guards = guards
 
     for n in 0 ..< range {
       let currentSafety = safetyFn(guards)
@@ -131,14 +131,10 @@ extension Day14 {
   }
 }
 
-private func mod(_ x: Int, _ n: Int) -> Int {
-  ((x % n) + n) % n
-}
-
 extension Day14 {
   func printResult(_ n: Int) -> String {
     var guards = guards
-    for _ in 0..<n {
+    for _ in 0 ..< n {
       guards = guards.map(\.advance)
     }
     let positions = Set(guards.map { Cell($0.py, $0.px) })
