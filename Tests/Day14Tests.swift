@@ -9,7 +9,7 @@ struct Day14Tests {
     @Test("Test parser implementation")
     func parseInput() {
       let day = Day14(data: testInput)
-      var guards = day.guards
+      let guards = day.guards
       #expect(guards.count == 12)
     }
   }
@@ -17,25 +17,16 @@ struct Day14Tests {
   @Suite("Tests on sample inputs")
   struct SolutionsTests {
     let day = Day14(data: testInput)
-
+    
     @Test("Part1 example")
     func testPart1() async throws {
       let position = day.positionFn(width: 11, height: 7, time: 100)
       let safety = day.safetyFn(width: 11, height: 7)
       let guards = day.guards
-      print(guards)
       let positions = guards.map(position)
       let result = safety(positions)
-
+      
       #expect(result == 12)
-    }
-
-    @Test("Part2 example")
-    func testPart2() async throws {
-      await withKnownIssue {
-        let result = try await day.part2()
-        #expect(result == 10)
-      }
     }
   }
 }

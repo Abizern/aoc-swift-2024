@@ -1,8 +1,8 @@
 import Foundation
 import Parsing
+import AoCCommon
 
 struct Day14: AdventDay, Sendable {
-  // Save your data in a corresponding text file in the `Data` directory.
   let data: String
   let day = 14
   let puzzleName: String = "--- Day 14: Restroom Redoubt ---"
@@ -19,16 +19,32 @@ struct Day14: AdventDay, Sendable {
     }
   }
 
-  // Replace this with your solution for the first part of the day's challenge.
   func part1() async throws -> Int {
     let positionFn = positionFn(width: 101, height: 103, time: 100)
     let safetyFn = safetyFn(width: 101, height: 103)
 
     return safetyFn(guards.map(positionFn))
   }
+
+  func part2() async throws -> Int {
+    var minSafety = Int.max
+    var iteration = 0
+    let safetyFn = safetyFn2(width: 101, height: 103)
+    let range = 101 * 103 // after this things will be repeatin themselves
+    var guards = self.guards
+
+    for n in 0 ..< range {
+      let currentSafety = safetyFn(guards)
+      if currentSafety < minSafety {
+        minSafety = currentSafety
+        iteration = n
+      }
+      guards = guards.map(\.advance)
+    }
+    return iteration
+  }
 }
 
-// Add any extra code and types in here to separate it from the required behaviour
 extension Day14 {
   struct Guard: Equatable {
     let px: Int
@@ -42,6 +58,14 @@ extension Day14 {
       py = values.1!
       vx = values.2!
       vy = values.3!
+    }
+
+    // Hard coding values, as there are no tests
+    var advance: Guard {
+      let newX = mod(px + vx, 101)
+      let newY = mod(py + vy, 103)
+
+      return Guard((newX, newY, vx, vy))
     }
   }
 
@@ -60,6 +84,18 @@ extension Day14 {
       let q2 = positions.filter { $0.0 > midX && $0.1 < midY }.count
       let q3 = positions.filter { $0.0 < midX && $0.1 > midY }.count
       let q4 = positions.filter { $0.0 > midX && $0.1 > midY }.count
+
+      return [q1, q2, q3, q4].reduce(1, *)
+    }
+  }
+
+  func safetyFn2(width: Int, height: Int) -> ([Guard]) -> Int {
+    { gs in
+      let (midX, midY) = (width / 2, height / 2)
+      let q1 = gs.filter { $0.px < midX && $0.py < midY }.count
+      let q2 = gs.filter { $0.px > midX && $0.py < midY }.count
+      let q3 = gs.filter { $0.px < midX && $0.py > midY }.count
+      let q4 = gs.filter { $0.px > midX && $0.py > midY }.count
 
       return [q1, q2, q3, q4].reduce(1, *)
     }
@@ -97,4 +133,28 @@ extension Day14 {
 
 private func mod(_ x: Int, _ n: Int) -> Int {
   ((x % n) + n) % n
+}
+
+extension Day14 {
+  func printResult(_ n: Int) -> String {
+    var guards = guards
+    for _ in 0..<n {
+      guards = guards.map(\.advance)
+    }
+    let positions = Set(guards.map { Cell($0.py, $0.px) })
+
+    var output = ""
+    for r in 0 ..< 103 {
+      var str = ""
+      for c in 0 ..< 101 {
+        if positions.contains(Cell(r, c)) {
+          str.append("#")
+        } else {
+          str.append(".")
+        }
+      }
+      output += "\(str)\n"
+    }
+    return output
+  }
 }
