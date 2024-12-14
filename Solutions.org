@@ -15,7 +15,7 @@
 |  11 | Plutonian Pebbles     |        239714 | 284973560658514 |                 |
 |  12 | Garden Groups         |       1533024 |          910066 |                 |
 |  13 | Claw Contraption      |         31761 |  90798500745591 |                 |
-|  14 |                       |               |                 |                 |
+|  14 | Restroom Redoubt      |     224357412 |            7083 |                 |
 |  15 |                       |               |                 |                 |
 |  16 |                       |               |                 |                 |
 |  17 |                       |               |                 |                 |
@@ -33,8 +33,8 @@
 
 | Period                    | number |
 |---------------------------+--------|
-| Achieved during the month |     26 |
+| Achieved during the month |     28 |
 | Achieved later            |        |
-| Total                     |     26 |
+| Total                     |     28 |
 |                           |        |
 #+TBLFM: @4$2=vsum(@2..@3)
