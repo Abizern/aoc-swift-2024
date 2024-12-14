@@ -20,6 +20,8 @@ building Advent of Code solutions.
 - [Day10: Hoof It](https://abizern.dev/posts/aoc-day10-hoof-it/)
 - [Day11: Plutonian Pebbles](https://abizern.dev/posts/aoc-day11-plutonian-pebbles/)
 - [Day12: Garden Groups](https://abizern.dev/posts/aoc-day12-garden-groups/)
+- [Day13: Claw Contraption](https://abizern.dev/posts/aoc-day13-claw-contraption/)
+- [Day14: Restroom Redoubt](https://abizern.dev/posts/aoc-day14-restroom-redoubt/)
 
 ## Template 
 
