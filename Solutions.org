@@ -16,7 +16,7 @@
 |  12 | Garden Groups         |       1533024 |          910066 |                 |
 |  13 | Claw Contraption      |         31761 |  90798500745591 |                 |
 |  14 | Restroom Redoubt      |     224357412 |            7083 |                 |
-|  15 |                       |               |                 |                 |
+|  15 | Warehouse Woes        |       1318523 |         1337648 |                 |
 |  16 |                       |               |                 |                 |
 |  17 |                       |               |                 |                 |
 |  18 |                       |               |                 |                 |
@@ -33,8 +33,8 @@
 
 | Period                    | number |
 |---------------------------+--------|
-| Achieved during the month |     28 |
+| Achieved during the month |     30 |
 | Achieved later            |        |
-| Total                     |     28 |
+| Total                     |     30 |
 |                           |        |
 #+TBLFM: @4$2=vsum(@2..@3)
