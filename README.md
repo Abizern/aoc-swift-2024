@@ -25,7 +25,7 @@ building Advent of Code solutions.
 
 ## Template 
 
-Based on the [swift-aoc-starter-example](https://github.com/apple/swift-aoc-starter-example/) provided by Apple
+This template is provided by https://github.com/Abizern/aoc-swift-starter, which itself is based on on the [swift-aoc-starter-example](https://github.com/apple/swift-aoc-starter-example/) provided by Apple.
 
 ### Major changes from the forkeed template
 
