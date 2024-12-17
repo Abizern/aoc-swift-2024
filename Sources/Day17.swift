@@ -20,7 +20,6 @@ struct Day17: AdventDay, Sendable {
   func part1() async throws -> String {
     var comp = computer
     comp.run()
-    print(comp.output)
     return comp.output.map(String.init).joined(separator: ",")
   }
 }
