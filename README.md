@@ -22,6 +22,7 @@ building Advent of Code solutions.
 - [Day12: Garden Groups](https://abizern.dev/posts/aoc-day12-garden-groups/)
 - [Day13: Claw Contraption](https://abizern.dev/posts/aoc-day13-claw-contraption/)
 - [Day14: Restroom Redoubt](https://abizern.dev/posts/aoc-day14-restroom-redoubt/)
+- [Day15: Warehouse Woes](https://abizern.dev/posts/aoc-day15-warehouse-woes/)
 
 ## Template 
 
