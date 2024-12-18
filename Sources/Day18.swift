@@ -37,20 +37,9 @@ struct Day18: AdventDay, Sendable {
   }
 
   func part2() async throws -> String {
-    let index = points.partitioningIndex { point in
-      let graph = createGraph(width: 71, height: 71)
-      let start = graph.node(atGridPosition: vector_int2(0, 0))!
-      let end = graph.node(atGridPosition: vector_int2(70, 70))!
-      let searchIndex = points.firstIndex { $0 == point }!
-      let slice = points.prefix(through: searchIndex)
-      remove(points: slice, from: graph)
-
-      return graph.findPath(from: start, to: end).isEmpty
-    }
-
-    let point = points[index]
-
-    return "\(point.0),\(point.1)"
+    obstacle()
+//    binarySearch()
+//    bruteForce()J
   }
 }
 
@@ -72,5 +61,67 @@ extension Day18 {
 
   func remove(points: [(Int, Int)].SubSequence, from graph: GridGraph) {
     graph.remove(nodes(for: points, from: graph))
+  }
+
+  func bruteForce() -> String {
+    let graph = createGraph(width: 71, height: 71)
+    let start = graph.node(atGridPosition: vector_int2(0, 0))!
+    let end = graph.node(atGridPosition: vector_int2(70, 70))!
+
+    remove(points: points.prefix(1024), from: graph)
+
+    for point in points.dropFirst(1024) {
+      let node = graph.node(atGridPosition: vector_int2(Int32(point.1), Int32(point.0)))!
+      graph.remove([node])
+
+      if graph.findPath(from: start, to: end).isEmpty {
+        return "\(point.0),\(point.1)"
+      }
+    }
+
+    return "Anser not found"
+  }
+
+  func binarySearch() -> String {
+    let index = points.partitioningIndex { point in
+      let graph = createGraph(width: 71, height: 71)
+      let start = graph.node(atGridPosition: vector_int2(0, 0))!
+      let end = graph.node(atGridPosition: vector_int2(70, 70))!
+      let searchIndex = points.firstIndex { $0 == point }!
+      let slice = points.prefix(through: searchIndex)
+      remove(points: slice, from: graph)
+
+      return graph.findPath(from: start, to: end).isEmpty
+    }
+
+    let point = points[index]
+
+    return "\(point.0),\(point.1)"
+  }
+
+  func obstacle() -> String {
+    let graph = createGraph(width: 71, height: 71)
+    let start = graph.node(atGridPosition: vector_int2(0, 0))!
+    let end = graph.node(atGridPosition: vector_int2(70, 70))!
+
+    remove(points: points.prefix(1024), from: graph)
+    var path = graph.findPath(from: start, to: end)
+
+    for point in points.dropFirst(1024) {
+      let node = graph.node(atGridPosition: vector_int2(Int32(point.1), Int32(point.0)))!
+      graph.remove([node])
+
+      guard path.contains(node) else { continue }
+
+      let newPath = graph.findPath(from: start, to: end)
+
+      if newPath.isEmpty {
+        return "\(point.0),\(point.1)"
+      } else {
+        path = newPath
+      }
+    }
+
+    return "Answer not found"
   }
 }
