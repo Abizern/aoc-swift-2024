@@ -1,3 +1,4 @@
+import Algorithms
 import AoCCommon
 import Foundation
 import GameplayKit
@@ -8,7 +9,7 @@ typealias Node = GKGridGraphNode
 struct Day18: AdventDay, Sendable {
   let data: String
   let day = 18
-  let puzzleName: String = "--- Day 0: Placeholder! ---"
+  let puzzleName: String = "--- Day 18: RAM Run ---"
 
   init(data: String) {
     self.data = data
@@ -24,7 +25,7 @@ struct Day18: AdventDay, Sendable {
 
   func part1() async throws -> String {
     let graph = createGraph(width: 71, height: 71)
-    let points = Array(points.prefix(1024))
+    let points = points.prefix(1024)
     remove(points: points, from: graph)
 
     let start = graph.node(atGridPosition: vector_int2(0, 0))!
@@ -36,22 +37,20 @@ struct Day18: AdventDay, Sendable {
   }
 
   func part2() async throws -> String {
-    let graph = createGraph(width: 71, height: 71)
-    let start = graph.node(atGridPosition: vector_int2(0, 0))!
-    let end = graph.node(atGridPosition: vector_int2(70, 70))!
+    let index = points.partitioningIndex { point in
+      let graph = createGraph(width: 71, height: 71)
+      let start = graph.node(atGridPosition: vector_int2(0, 0))!
+      let end = graph.node(atGridPosition: vector_int2(70, 70))!
+      let searchIndex = points.firstIndex { $0 == point }!
+      let slice = points.prefix(through: searchIndex)
+      remove(points: slice, from: graph)
 
-    remove(points: Array(points.prefix(1024)), from: graph)
-
-    for point in points.dropFirst(1024) {
-      let node = graph.node(atGridPosition: vector_int2(Int32(point.1), Int32(point.0)))!
-      graph.remove([node])
-
-      if graph.findPath(from: start, to: end).isEmpty {
-        return "\(point.0),\(point.1)"
-      }
+      return graph.findPath(from: start, to: end).isEmpty
     }
 
-    return "Anser not found"
+    let point = points[index]
+
+    return "\(point.0),\(point.1)"
   }
 }
 
@@ -66,16 +65,12 @@ extension Day18 {
     )
   }
 
-  func remove(points: [(Int, Int)], from graph: GridGraph) {
-    let nodes = points.map { vector_int2(Int32($0.1), Int32($0.0)) }
+  func nodes(for points: [(Int, Int)].SubSequence, from graph: GridGraph) -> [Node] {
+    points.map { vector_int2(Int32($0.1), Int32($0.0)) }
       .compactMap { graph.node(atGridPosition: $0) }
-
-    graph.remove(nodes)
   }
 
-  func remove(point: (Int, Int), from graph: GridGraph) {
-    let point = vector_int2(Int32(point.1), Int32(point.0))
-    let node = graph.node(atGridPosition: point)!
-    graph.remove([node])
+  func remove(points: [(Int, Int)].SubSequence, from graph: GridGraph) {
+    graph.remove(nodes(for: points, from: graph))
   }
 }
