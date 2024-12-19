@@ -24,6 +24,7 @@ building Advent of Code solutions.
 - [Day14: Restroom Redoubt](https://abizern.dev/posts/aoc-day14-restroom-redoubt/)
 - [Day15: Warehouse Woes](https://abizern.dev/posts/aoc-day15-warehouse-woes/)
 - [Day18: RAM Run](https://abizern.dev/posts/aoc-day18-ram-run/)
+- [Day19: Linen Layout](https://abizern.dev/posts/aoc-day19-linen-layout/)
 
 
 ## Template 
