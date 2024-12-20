@@ -8,9 +8,8 @@ struct Day20Tests {
   struct ParserTests {
     @Test("Test parser implementation")
     func parseInput() {
-      let rows = Day20(data: testInput).rows
-      #expect(rows.count == 15)
-      #expect(rows[0].count == 15)
+      let track = Day20(data: testInput).track
+      #expect(track.keys.count == 85)
     }
   }
 
@@ -18,26 +17,11 @@ struct Day20Tests {
   struct SolutionsTests {
     let day = Day20(data: testInput)
 
-    @Test("Solution")
-    func solution() async throws {
-      let result = day.bruteForce(from: day.rows, target: 4)
-      #expect(result == 30)
-    }
-
-    @Test("Part1 example")
-    func testPart1() async throws {
-      await withKnownIssue {
-        let result = try await day.part1()
-        #expect(result == 10)
-      }
-    }
-
-    @Test("Part2 example")
-    func testPart2() async throws {
-      await withKnownIssue {
-        let result = try await day.part2()
-        #expect(result == 10)
-      }
+    @Test("Count Cheats")
+    func countCheats() {
+      let track = day.track
+      let count = day.countCheats(track, radius: 2, minReduction: 2)
+      #expect(count == 44)
     }
   }
 }

@@ -1,6 +1,7 @@
 import Foundation
 import Parsing
-import GameplayKit
+import Algorithms
+import AoCCommon
 
 struct Day20: AdventDay, Sendable {
   let data: String
@@ -11,73 +12,100 @@ struct Day20: AdventDay, Sendable {
     self.data = data
   }
 
-  var rows: [[Character]] {
+  // (dictionary of distance from start, start, end)
+  var track: [Cell: Int] {
     do {
-      return try InputParser().parse(data)
+      let rows = try InputParser().parse(data)
+      return track(rows)
     } catch {
       fatalError("Unable to parse data \(error)")
     }
   }
 
   func part1() async throws -> Int {
-    bruteForce(from: rows, target: 100)
+    countCheats(track, radius: 2, minReduction: 100)
+  }
+
+  func part2() async throws -> Int {
+    countCheats(track, radius: 20, minReduction: 100)
   }
 }
 
 extension Day20 {
-  typealias GridGraph = GKGridGraph<GKGridGraphNode>
-  typealias Node = GKGridGraphNode
+  func track(_ rows: [[Character]]) -> [Cell: Int] {
+    let grid = Grid(rows: rows)
 
-  func bruteForce(from rows: [[Character]], target: Int) -> Int {
-    let graph = GKGridGraph(
-      fromGridStartingAt: vector_int2(0, 0),
-      width: Int32(rows[0].count),
-      height: Int32(rows.count),
-      diagonalsAllowed: false,
-      nodeClass: Node.self
-    )
+    let start = grid.firstCell(for: "S")!
+    let end = grid.firstCell(for: "E")!
 
-    var walls: [Node] = []
-    var candidates: [[Node]] = []
-    var start: Node = graph.nodes!.first! as! Node
-    var end: Node = graph.nodes!.first! as! Node
-    for node in graph.nodes! {
-      let node = node as! Node
-      let position = node.gridPosition
-      let value = rows[Int(position.y)][Int(position.x)]
-      switch value {
-      case "#":
-        walls.append(node)
-      case "S":
-        start = node
-        continue
-      case "E":
-        end = node
-        continue
-      default:
+    var path: [Cell] = []
+    var queue: Deque<[Cell]> = [[start]]
+    var seen: Set<Cell> = []
+
+    while !queue.isEmpty && path.isEmpty {
+      let currentPath = queue.removeFirst()
+      let head = currentPath.last!
+      if head == end {
+        path = currentPath
         continue
       }
-      let neighbours = (node.connectedNodes as! [Node]).filter { n in
-        rows[Int(n.gridPosition.y)][Int(n.gridPosition.x)] != "#"
+      if seen.contains(head) {
+        continue
       }
-      if neighbours.count > 1 {
-        candidates.append(neighbours)
+      else {
+        seen.insert(head)
+      }
+      let neighbours = grid.neighbours(head, includeDiagonals: false)
+      for neighbour in neighbours {
+        guard grid.element(neighbour) != "#",
+              !seen.contains(neighbour)
+        else {
+          continue
+        }
+        queue.append(currentPath + [neighbour])
       }
     }
 
-    graph.remove(walls)
-    let path = graph.findPath(from: start, to: end) as! [Node]
-
-    let shortened = candidates.filter { candidates in
-      guard let s = candidates.first,
-            let e = candidates.last,
-            let sIndex = path.firstIndex(of: s),
-            let eIndex = path.firstIndex(of: e)
-      else { return false }
-      return abs(eIndex - sIndex) >= target + 2
+    var dict = [Cell: Int]()
+    for (distance, position) in path.enumerated() {
+      dict[position] = distance
     }
 
-    return shortened.count
+    return dict
+  }
+
+  func countCheats(_ track: [Cell:Int], radius: Int, minReduction reduction: Int) -> Int {
+    let path = track.sorted { $0.value < $1.value }
+    let x = path.map { cell, distance in
+      var candidates: Set<Cell> = []
+      let targets = targets(from: cell, distance: radius)
+      for (c, d) in targets {
+        guard let dd = track[c],
+              !candidates.contains(c),
+              dd >= distance + d + reduction
+        else {
+          continue
+        }
+        candidates.insert(c)
+      }
+      return candidates.count
+
+    }.reduce(0, +)
+    return x
+  }
+
+  func targets(from: Cell, distance: Int) -> [(Cell, Int)] {
+    var cells: [(Cell, Int)] = []
+    for r in -distance ... distance {
+      for c in -distance ... distance {
+        guard abs(r) + abs(c) <= distance
+        else {
+          continue
+        }
+        cells.append((Cell(from.row + r, from.col + c), abs(r) + abs(c)))
+      }
+    }
+    return cells
   }
 
 }
