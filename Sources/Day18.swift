@@ -79,7 +79,7 @@ extension Day18 {
       }
     }
 
-    return "Anser not found"
+    return "Answer not found"
   }
 
   func binarySearch() -> String {
