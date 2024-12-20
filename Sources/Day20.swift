@@ -1,7 +1,7 @@
-import Foundation
-import Parsing
 import Algorithms
 import AoCCommon
+import Foundation
+import Parsing
 
 struct Day20: AdventDay, Sendable {
   let data: String
@@ -42,7 +42,7 @@ extension Day20 {
     var queue: Deque<[Cell]> = [[start]]
     var seen: Set<Cell> = []
 
-    while !queue.isEmpty && path.isEmpty {
+    while !queue.isEmpty, path.isEmpty {
       let currentPath = queue.removeFirst()
       let head = currentPath.last!
       if head == end {
@@ -51,8 +51,7 @@ extension Day20 {
       }
       if seen.contains(head) {
         continue
-      }
-      else {
+      } else {
         seen.insert(head)
       }
       let neighbours = grid.neighbours(head, includeDiagonals: false)
@@ -74,9 +73,9 @@ extension Day20 {
     return dict
   }
 
-  func countCheats(_ track: [Cell:Int], radius: Int, minReduction reduction: Int) -> Int {
+  func countCheats(_ track: [Cell: Int], radius: Int, minReduction reduction: Int) -> Int {
     let path = track.sorted { $0.value < $1.value }
-    let x = path.map { cell, distance in
+    return path.map { cell, distance in
       var candidates: Set<Cell> = []
       let targets = targets(from: cell, distance: radius)
       for (c, d) in targets {
@@ -91,7 +90,6 @@ extension Day20 {
       return candidates.count
 
     }.reduce(0, +)
-    return x
   }
 
   func targets(from: Cell, distance: Int) -> [(Cell, Int)] {
@@ -107,10 +105,10 @@ extension Day20 {
     }
     return cells
   }
-
 }
 
 // MARK: - Parsing
+
 extension Day20 {
   struct ParseLine: Parser {
     var body: some Parser<Substring, [Character]> {
