@@ -25,6 +25,7 @@ building Advent of Code solutions.
 - [Day15: Warehouse Woes](https://abizern.dev/posts/aoc-day15-warehouse-woes/)
 - [Day18: RAM Run](https://abizern.dev/posts/aoc-day18-ram-run/)
 - [Day19: Linen Layout](https://abizern.dev/posts/aoc-day19-linen-layout/)
+- [Day20: Race Condition](https://abizern.dev/posts/aoc-day20-race-conditino/)
 
 
 ## Template 
