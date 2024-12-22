@@ -45,10 +45,9 @@ struct Day22Tests {
 
     @Test("Part2 example")
     func testPart2() async throws {
-      await withKnownIssue {
-        let result = try await day.part2()
-        #expect(result == 10)
-      }
+      let day = Day22(data: testInput2)
+      let result = try await day.part2()
+      #expect(result == 23)
     }
   }
 }
@@ -58,5 +57,13 @@ private let testInput =
   1
   10
   100
+  2024
+  """
+
+private let testInput2 =
+  """
+  1
+  2
+  3
   2024
   """

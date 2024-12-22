@@ -23,7 +23,7 @@
 |  19 | Linen Layout           |               304 | 705756472327497 |                 |
 |  20 | Race Condition         |              1286 |          989316 |                 |
 |  21 |                        |                   |                 |                 |
-|  22 |                        |                   |                 |                 |
+|  22 | Monkey Market          |       14869099597 |            1717 |                 |
 |  23 |                        |                   |                 |                 |
 |  24 |                        |                   |                 |                 |
 |  25 |                        |                   |                 |                 |
@@ -33,8 +33,8 @@
 
 | Period                    | number |
 |---------------------------+--------|
-| Achieved during the month |     37 |
+| Achieved during the month |     40 |
 | Achieved later            |        |
-| Total                     |     37 |
+| Total                     |     40 |
 |                           |        |
 #+TBLFM: @4$2=vsum(@2..@3)
