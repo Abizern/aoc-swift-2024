@@ -26,6 +26,7 @@ building Advent of Code solutions.
 - [Day18: RAM Run](https://abizern.dev/posts/aoc-day18-ram-run/)
 - [Day19: Linen Layout](https://abizern.dev/posts/aoc-day19-linen-layout/)
 - [Day20: Race Condition](https://abizern.dev/posts/aoc-day20-race-conditino/)
+- [Day22: Monkey Market](https://abizern.dev/posts/aoc-day22-monkey-market/)
 
 
 ## Template 
